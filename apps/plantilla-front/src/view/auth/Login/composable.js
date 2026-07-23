@@ -1,0 +1,22 @@
+import { useLoginStore } from '../../../store/auth/useLoginStore.js';
+import { computed } from 'vue';
+import { useRouter } from 'vue-router';
+
+export const useLogin = () => {
+    const router = useRouter();
+    const store = useLoginStore();
+    
+    const formulario = computed(() => store.formulario);
+
+    const submit = async () => {
+        const response = await store.submit();
+        if (response.token) {
+            router.push({ name: 'AdminDashboard' });
+        }
+    }
+
+    return{
+        formulario,
+        submit
+    }
+}

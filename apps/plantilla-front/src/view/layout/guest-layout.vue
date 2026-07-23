@@ -1,13 +1,13 @@
 <template>
   <v-app>
-    <v-app-bar color="teal" dark>
+    <v-app-bar >
       <v-toolbar-title>My App</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn text to="/">Home</v-btn>
       <v-btn text to="/login">Login</v-btn>
     </v-app-bar>
 
-    <v-main class="bg-gray-50">
+    <v-main >
       <v-container class="max-w-7xl mx-auto py-8">
         <router-view></router-view>
       </v-container>

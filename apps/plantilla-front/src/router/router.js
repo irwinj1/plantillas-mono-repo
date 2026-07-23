@@ -3,8 +3,8 @@ import GuestLayout from '../view/layout/guest-layout.vue'
 import AdminLayout from '../view/layout/admin-layout.vue'
 
 import Home from '../view/Home.vue'
-import Login from '../view/Login.vue'
 import AdminDashboard from '../view/AdminDashboard.vue'
+import { routerAuth } from '../view/auth/router.js'
 
 const routes = [
   {
@@ -16,11 +16,7 @@ const routes = [
         name: 'Home',
         component: Home
       },
-      {
-        path: 'login',
-        name: 'Login',
-        component: Login
-      }
+      ...routerAuth,
     ]
   },
   {
@@ -35,7 +31,11 @@ const routes = [
           requiresAuth: true
         }
       }
-    ]
+    ],
+    meta: {
+      requiresAuth: true,
+      
+    }
   }
 ]
 
@@ -43,5 +43,19 @@ const router = createRouter({
   history: createWebHistory(),
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = localStorage.getItem('token') !== null;
+
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!isAuthenticated) {
+      next({ name: 'Login' });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
 
 export default router

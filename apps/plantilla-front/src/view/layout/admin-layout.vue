@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar color="primary" dark>
+    <v-app-bar>
       <v-app-bar-nav-icon @click="drawer = !drawer">
         <v-icon icon="mdi-reorder-horizontal"></v-icon>
       </v-app-bar-nav-icon>
@@ -25,7 +25,7 @@
       </v-list>
     </v-navigation-drawer> -->
 
-    <v-main class="bg-gray-100">
+    <v-main >
       <v-container fluid class="p-6">
         <router-view></router-view>
       </v-container>

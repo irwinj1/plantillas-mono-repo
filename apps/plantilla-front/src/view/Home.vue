@@ -1,5 +1,5 @@
 <template>
-  <div class="text-black">
+  <div>
     <h1>Welcome to My App</h1>
     <p>This is the public home pages.</p>
   </div>
