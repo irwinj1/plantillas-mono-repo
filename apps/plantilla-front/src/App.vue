@@ -1,6 +1,10 @@
 <script setup>
+import GlobalAlert from './components/GlobalAlert.vue';
 </script>
 
 <template>
-  <router-view></router-view>
+  <v-app>
+    <GlobalAlert />
+    <router-view></router-view>
+  </v-app>
 </template>

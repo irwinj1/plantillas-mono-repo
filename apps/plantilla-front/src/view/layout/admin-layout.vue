@@ -1,6 +1,7 @@
 <template>
   <v-app>
-    <v-app-bar>
+    <AppBar :drawer="drawer" @update:drawer="drawer = $event"></AppBar>
+    <!-- <v-app-bar>
       <v-app-bar-nav-icon @click="drawer = !drawer">
         <v-icon icon="mdi-reorder-horizontal"></v-icon>
       </v-app-bar-nav-icon>
@@ -8,7 +9,7 @@
       <v-spacer></v-spacer>
       <v-btn text to="/admin">Dashboard</v-btn>
       <v-btn text to="/">Logout</v-btn>
-    </v-app-bar>
+    </v-app-bar> -->
 
     <MenuLateral v-model:drawer="drawer" :permanent="permanent"></MenuLateral>
     <!-- <v-navigation-drawer permanent app>
@@ -35,6 +36,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import AppBar from '../../components/AppBar.vue'
 import MenuLateral from '../../components/MenuLateral.vue'
 
 const drawer = ref(true)
