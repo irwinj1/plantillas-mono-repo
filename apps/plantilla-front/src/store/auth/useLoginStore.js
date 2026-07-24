@@ -1,5 +1,6 @@
 import {defineStore} from 'pinia';
 import {login} from '../../services/auth/login.service.js';
+import {jwtDecode} from 'jwt-decode';
 
 export const useLoginStore = defineStore('login', {
   state: () => ({
@@ -12,14 +13,17 @@ export const useLoginStore = defineStore('login', {
     async submit() {
       try{
         const response = await login(this.formulario);
-        console.log(response);
         
-        if (response && response.token) {
-          localStorage.setItem('token', response.token);
-          localStorage.setItem('user', JSON.stringify(response.user));
+        if (response && response?.data?.token) {
+          const data = response?.data;
+          const decodedToken = jwtDecode(data.token);          
+          localStorage.setItem('roles', JSON.stringify(decodedToken.roles));
+          localStorage.setItem('permissions', JSON.stringify(decodedToken.permissions));
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('user', JSON.stringify(data.user));
         }
         
-        return response;
+        return data?.status;
       }catch(error){
         console.error(error);
       }

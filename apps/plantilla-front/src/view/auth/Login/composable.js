@@ -10,7 +10,7 @@ export const useLogin = () => {
 
     const submit = async () => {
         const response = await store.submit();
-        if (response.token) {
+        if (response) {
             router.push({ name: 'AdminDashboard' });
         }
     }

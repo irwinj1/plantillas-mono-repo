@@ -16,5 +16,8 @@ Route::prefix('auth')->group(function () {
             Route::put('/{id}', [RolesController::class, 'update']);
             Route::delete('/{id}', [RolesController::class, 'destroy']);
         });
+        Route::prefix('permissions')->group(function () {
+            Route::get('/', [RolesController::class, 'getPermissions']);
+        });
     });
 });

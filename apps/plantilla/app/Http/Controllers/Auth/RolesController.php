@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Response\ApiResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RolesController extends Controller
@@ -13,11 +16,18 @@ class RolesController extends Controller
     {
         try {
             $roles = Role::all();
-            return response()->json($roles);
+            return ApiResponse::success('Roles obtenidos correctamente', 200, $roles);
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Error al obtener los roles',
-            ], 500);
+            return ApiResponse::error('Error al obtener los roles', 500);
+        }
+    }
+    public function getPermissions()
+    {
+        try {
+            $permissions = Permission::all();
+            return ApiResponse::success('Permisos obtenidos correctamente', 200, $permissions);
+        } catch (\Exception $e) {
+            return ApiResponse::error('Error al obtener los permisos', 500);
         }
     }
 
@@ -61,9 +71,35 @@ class RolesController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            $validator = Validator::make($request->all(), [
+                'name' => 'nullable|string|max:255',
+                'permissions_to_add' => 'nullable|array',
+                'permissions_to_add.*' => 'string',
+                'permissions_to_remove' => 'nullable|array',
+                'permissions_to_remove.*' => 'string',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'message' => 'Error al validar el rol',
+                    'errors' => $validator->errors(),
+                ], 400);
+            }
+            
             $role = Role::find($id);
-            $role->name = $request->name;
+            if($request->filled('name')){
+                $role->name = $request->name;
+            }
             $role->save();
+
+            if ($request->filled('permissions_to_add')) {
+                $role->givePermissionTo($request->permissions_to_add);
+            }
+
+            if ($request->filled('permissions_to_remove')) {
+                $role->revokePermissionTo($request->permissions_to_remove);
+            }
+
             return response()->json($role);
         } catch (\Exception $e) {
             return response()->json([

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Response\ApiResponse;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -24,15 +25,12 @@ class LoginController extends Controller
             $user = auth('api')->user();
             $user->unsetRelation('roles');
             $user->unsetRelation('permissions');
+            $data['token'] = $token;
+            $data['user'] = $user;
 
-            return response()->json([
-                'token' => $token,
-                'user' => $user,
-            ]);
+            return ApiResponse::success('Inicio de sesión exitoso', 200, $data);
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Error al loguearse',
-            ], 500);
+            return ApiResponse::error('Error al iniciar sesión', 500);
         }
     }
 
