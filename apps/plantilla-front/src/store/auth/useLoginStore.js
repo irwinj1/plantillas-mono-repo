@@ -1,7 +1,8 @@
 import {defineStore} from 'pinia';
-import {login} from '../../services/auth/login.service.js';
+import {login, logout} from '../../services/auth/login.service.js';
 import {jwtDecode} from 'jwt-decode';
-
+import { useAlertStore } from '../useAlertStore.js';
+const alert = useAlertStore()
 export const useLoginStore = defineStore('login', {
   state: () => ({
     formulario: {
@@ -23,9 +24,19 @@ export const useLoginStore = defineStore('login', {
           localStorage.setItem('user', JSON.stringify(data.user));
         }
         
-        return data?.status;
+        return response?.status;
       }catch(error){
         console.error(error);
+      }
+    },
+    async logoutFunction(){
+      try {
+        const response = await logout()
+        if (response.success) {
+          return response.success
+        }
+      } catch (error) {
+       alert.showAlert(error,"error")
       }
     }
   }

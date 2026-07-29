@@ -37,9 +37,7 @@ class LoginController extends Controller
     public function logout(){
         try {
             auth('api')->logout();
-            return response()->json([
-                'message' => 'Usuario desconectado correctamente',
-            ]);
+           return ApiResponse::success("Sesión cerrada");
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Error al desconectarse',

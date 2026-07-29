@@ -17,7 +17,10 @@ const routes = [
         component: Home
       },
       ...routerAuth,
-    ]
+    ],
+     meta: {
+    guestOnly: true
+  }
   },
   {
     path: '/admin',
@@ -45,17 +48,27 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = localStorage.getItem('token') !== null;
+    const isAuthenticated = !!localStorage.getItem('token');
 
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (!isAuthenticated) {
-      next({ name: 'Login' });
-    } else {
-      next();
+    // Rutas protegidas
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (!isAuthenticated) {
+            return next({ name: 'Login' });
+        }
+
+        return next();
     }
-  } else {
+
+    // Rutas solo para invitados
+    if (to.matched.some(record => record.meta.guestOnly)) {
+        if (isAuthenticated) {
+            return next({ name: 'AdminDashboard' });
+        }
+
+        return next();
+    }
+
     next();
-  }
 });
 
 export default router
