@@ -11,6 +11,7 @@ services:
       - "3005:80"
     environment:
       - NODE_ENV=development
+      - PORT=80
     networks:
       - plantilla_network
 
@@ -24,6 +25,15 @@ services:
     working_dir: /var/www
     depends_on:
       - pgsql
+      - redis
+      - mongodb
+    environment:
+      - DB_HOST=plantilla_db
+      - DB_PORT=5432
+      - MONGODB_HOST=plantilla_mongo
+      - MONGODB_PORT=27017
+      - REDIS_HOST=plantilla_redis
+      - REDIS_PORT=6379
     networks:
       - plantilla_network
 
