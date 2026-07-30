@@ -6,15 +6,28 @@
       <v-toolbar-title>Admin Dashboard</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn text to="/admin">Dashboard</v-btn>
-      <v-btn text to="/">Logout</v-btn>
+      <v-btn text @click="cerrarSesion()">Logout</v-btn>
     </v-app-bar>
 </template>
 
 <script setup>
 import { defineProps, defineEmits } from 'vue';
+import { logout } from '../services/auth/login.service';
+import { useRouter } from 'vue-router';
+const router = useRouter()
+
 const props = defineProps({
     drawer: Boolean,
 })
 const emit = defineEmits(['update:drawer'])
 const toggleDrawer = () => emit('update:drawer', !props.drawer)
+
+const cerrarSesion = async () => {
+  const response = await logout()
+  if (response.status) {
+    localStorage.clear()
+    router.push('/')
+  }
+}
+
 </script>

@@ -29,15 +29,6 @@ export const useLoginStore = defineStore('login', {
         console.error(error);
       }
     },
-    async logoutFunction(){
-      try {
-        const response = await logout()
-        if (response.success) {
-          return response.success
-        }
-      } catch (error) {
-       alert.showAlert(error,"error")
-      }
-    }
+    
   }
 })
