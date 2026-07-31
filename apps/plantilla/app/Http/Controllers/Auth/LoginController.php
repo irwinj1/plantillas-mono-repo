@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
+    /**
+     * Login
+     *
+     */
     public function login(Request $request)
     {
         try {
@@ -34,6 +38,10 @@ class LoginController extends Controller
         }
     }
 
+    /**
+     * Logout
+     *
+     */
     public function logout(){
         try {
             auth('api')->logout();
@@ -45,6 +53,10 @@ class LoginController extends Controller
         }
     }
 
+    /**
+     * Refresh
+     *
+     */
     public function refresh()
     {
         try {

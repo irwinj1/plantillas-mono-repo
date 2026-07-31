@@ -28,7 +28,7 @@ export const menuItems = [
     {
         title: 'Configuración',
         icon: 'mdi-cog',
-        to: '/admin/settings',
+        to: '/admin/configuracion',
          roles:['admin','user','viewer']
     }
 ]

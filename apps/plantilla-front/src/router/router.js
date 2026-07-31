@@ -5,6 +5,7 @@ import AdminLayout from '../view/layout/admin-layout.vue'
 import Home from '../view/Home.vue'
 import AdminDashboard from '../view/AdminDashboard.vue'
 import { routerAuth } from '../view/auth/router.js'
+import { configurationRouter } from '../view/configuracion/router.js'
 
 const routes = [
   {
@@ -28,12 +29,13 @@ const routes = [
     children: [
       {
         path: '',
-        name: 'AdminDashboard',
+        name: 'Dashboard',
         component: AdminDashboard,
         meta: {
           requiresAuth: true
         }
-      }
+      },
+      ...configurationRouter
     ],
     meta: {
       requiresAuth: true,

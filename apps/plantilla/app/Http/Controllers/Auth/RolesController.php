@@ -11,7 +11,10 @@ use Spatie\Permission\Models\Role;
 
 class RolesController extends Controller
 {
-    //
+    /**
+     * Roles
+     *
+     */
     public function index()
     {
         try {
@@ -21,6 +24,11 @@ class RolesController extends Controller
             return ApiResponse::error('Error al obtener los roles', 500);
         }
     }
+
+    /**
+     * Permisos
+     *
+     */
     public function getPermissions()
     {
         try {
@@ -31,6 +39,10 @@ class RolesController extends Controller
         }
     }
 
+    /**
+     * Crear roles
+     *
+     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -68,6 +80,10 @@ class RolesController extends Controller
         }
     }
 
+    /**
+     * Editar roles
+     *
+     */
     public function update(Request $request, $id)
     {
         try {
@@ -108,6 +124,10 @@ class RolesController extends Controller
         }
     }
 
+    /**
+     * Eliminar roles
+     *
+     */
     public function destroy($id)
     {
         try {

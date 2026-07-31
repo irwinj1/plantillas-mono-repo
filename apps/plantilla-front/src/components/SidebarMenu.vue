@@ -55,6 +55,7 @@ const menu = ref(filterMenu(menuItems));
                 :to="item.to"
                 :prepend-icon="item.icon"
                 :title="item.title"
+                exact
             />
 
             <!-- Grupo -->
@@ -75,6 +76,7 @@ const menu = ref(filterMenu(menuItems));
                     :key="child.title"
                     :to="child.to"
                     :title="child.title"
+                    exact
                 />
             </v-list-group>
 

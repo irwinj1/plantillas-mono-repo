@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <AppBar :drawer="drawer" @update:drawer="drawer = $event"></AppBar>
+    <AppBar :drawer="drawer" @update:drawer="drawer = $event" :nameButton="name"></AppBar>
     <!-- <v-app-bar>
       <v-app-bar-nav-icon @click="drawer = !drawer">
         <v-icon icon="mdi-reorder-horizontal"></v-icon>
@@ -35,12 +35,25 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import AppBar from '../../components/AppBar.vue'
 import MenuLateral from '../../components/MenuLateral.vue'
+import { useRoute } from 'vue-router'
+const route = useRoute()
+console.log(route);
+const name = ref(route.name)
 
 const drawer = ref(true)
 const permanent = ref(false)
+
+watch(
+    () => route.name,
+    (newValue, oldValue) => {
+        console.log('Anterior:', oldValue)
+        console.log('Actual:', newValue)
+        name.value = newValue
+    }
+)
 </script>
 
 <style scoped>

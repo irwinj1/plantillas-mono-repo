@@ -11,7 +11,7 @@ export const useLogin = () => {
     const submit = async () => {
         const response = await store.submit();
         if (response == 200) {
-            router.push({ name: 'AdminDashboard' });
+            router.push({ name: 'Dashboard' });
         }
     }
 
